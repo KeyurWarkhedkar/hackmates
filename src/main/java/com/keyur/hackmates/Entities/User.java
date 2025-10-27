@@ -23,9 +23,10 @@ public class User {
     private Integer id;
 
     @Email
+    @Column(unique = true)
     private String email;
 
-    @NotBlank
+    @Column(nullable = true)
     private String password;
 
     @NotBlank
@@ -56,5 +57,7 @@ public class User {
 
     private String role;
 
-    private boolean isActive;
+    private boolean active;
+
+    private boolean profileComplete;
 }
