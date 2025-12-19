@@ -6,7 +6,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class JwtResponseDto {
-    private String accessToken;
+    private String token;
     private String tokenType;
     private int expiresIn;
+    private VaibhavDto user;
 }

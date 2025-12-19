@@ -29,10 +29,8 @@ public class User {
     @Column(nullable = true)
     private String password;
 
-    @NotBlank
     private String username;
 
-    @NotBlank
     private String bio;
 
     @NotBlank
@@ -40,10 +38,6 @@ public class User {
 
     @NotBlank
     private String lastName;
-
-    @NotBlank
-    @Pattern(regexp="^[0-9]{10}$", message="Phone number must be 10 digits")
-    private String phoneNumber;
 
     private String profilePhotoUrl;
 
@@ -60,4 +54,6 @@ public class User {
     private boolean active;
 
     private boolean profileComplete;
+
+    private boolean isVerified = false;
 }

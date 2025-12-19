@@ -56,7 +56,7 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
 
         tempCodeStore.save(code, jwt);
 
-        String redirectUrl = "http://localhost:8080/home?code=" + code;
+        String redirectUrl = "hackmates://oauth/callback?key=" + code;
         redirectStrategy.sendRedirect(request, response, redirectUrl);
     }
 }

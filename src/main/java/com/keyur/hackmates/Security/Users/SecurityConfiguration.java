@@ -24,6 +24,8 @@ public class SecurityConfiguration {
     private final CustomOAuth2SuccessHandler successHandler;
     private final CustomUserDetailsService userDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -33,11 +35,25 @@ public class SecurityConfiguration {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/oauth2/**", "/home/**").permitAll()
+                        .requestMatchers(
+                                "/auth/login",
+                                "/auth/register",
+                                "/auth/home/**",
+                                "/auth/getJwt",
+                                "/auth/google",
+                                "/auth/verify-otp",
+                                "/oauth2/**",
+                                "/swagger-ui/index.html",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth -> oauth
                         .successHandler(successHandler)
+                )
+                .exceptionHandling(exceptions -> exceptions
+                        .authenticationEntryPoint(restAuthenticationEntryPoint)
                 )
                 .authenticationProvider(daoAuthenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

@@ -24,6 +24,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final CustomUserDetailsService userDetailsService;
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+
+        String path = request.getRequestURI();
+        return path.equals("/auth/login") ||
+                path.equals("/auth/register") ||
+                path.equals("/auth/getJwt") ||
+                path.equals("/auth/verify-otp") ||
+                path.startsWith("/oauth2/");
+    }
+
+    @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain)
@@ -32,6 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
+            System.out.println("JWT is null. Frontend ki galti hai!");
             return;
         }
 

@@ -2,10 +2,7 @@ package com.keyur.hackmates.Entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 
@@ -13,7 +10,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+//@RequiredArgsConstructor
 public class Interest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,4 +21,8 @@ public class Interest {
 
     @ManyToMany(mappedBy = "interests")
     private Set<User> users;
+
+    public Interest(String name) {
+        this.interest = name;
+    }
 }
